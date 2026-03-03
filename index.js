@@ -45,7 +45,7 @@ program
         form.append('projectName', projectName); 
 
         try {
-          const response = await axios.post('https://teicloud-backend.onrender.com', form, {
+          const response = await axios.post('https://teicloud-backend.onrender.com/upload', form, {
             headers: form.getHeaders(),
           });
           
