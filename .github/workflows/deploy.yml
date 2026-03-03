@@ -1,5 +1,8 @@
 name: Build and Deploy Website
-on: [push] # Tự động chạy khi Backend push code vào đây
+on: 
+  push:
+    branches:
+      - production
 
 jobs:
   build-and-deploy:
