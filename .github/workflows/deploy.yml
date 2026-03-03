@@ -1,29 +1,22 @@
-name: Build and Deploy Website
-on: 
+name: Deploy Static Website
+on:
   push:
     branches:
-      - production
+      - production # Đảm bảo chỉ chạy khi Backend đẩy code vào nhánh production
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      # Bỏ qua hoàn toàn bước Setup Node.js và npm install
 
-      - name: Install and Build
-        run: |
-          npm install
-          npm run build --if-present
-
-      - name: Deploy to Cloudflare Pages # Hoặc nơi khác tùy bạn chọn
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=teicloud-website
+          # Thay 'dist' thành '.' để deploy toàn bộ thư mục hiện tại
+          command: pages deploy . --project-name=teicloud-demo
