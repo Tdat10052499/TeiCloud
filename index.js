@@ -17,10 +17,18 @@ program
   .version('1.0.0');
 
 program
-  .command('deploy')
-  .description('Nén code và đẩy lên hệ thống TeiCloud')
-  .action(async () => {
-    const spinner = ora('Đang gói code của bạn lại...').start();
+  .command('deploy <projectName>')
+  .description('Nén code và đẩy lên hệ thống TeiCloud theo tên dự án')
+  .action(async (projectName) => { // Nhận biến projectName vào hàm
+    
+    // Kiểm tra tên project không được chứa khoảng trắng hoặc ký tự đặc biệt
+    const validNameRegex = /^[a-z0-9-]+$/;
+    if (!validNameRegex.test(projectName)) {
+      console.log(chalk.red('❌ Lỗi: Tên dự án chỉ được chứa chữ cái thường, số và dấu gạch ngang (VD: my-web-123)'));
+      process.exit(1);
+    }
+
+    const spinner = ora(`Đang đóng gói mã nguồn cho dự án [${projectName}]...`).start();
     
     try {
       const zipPath = path.join(process.cwd(), 'deploy.zip');
@@ -28,13 +36,15 @@ program
       const archive = archiver('zip', { zlib: { level: 9 } });
 
       output.on('close', async () => {
-        spinner.text = 'Đang bắn code lên Trạm trung chuyển (Backend)...';
+        spinner.text = 'Đang chuyển giao lên Trạm trung chuyển...';
         
         const form = new FormData();
         form.append('file', fs.createReadStream(zipPath));
+        
+        // DÒNG QUAN TRỌNG: Đính kèm tên project vào gói hàng gửi đi
+        form.append('projectName', projectName); 
 
         try {
-          // Gửi tới Backend đang chạy trên localhost:3000 của bạn
           const response = await axios.post('http://localhost:3000/upload', form, {
             headers: form.getHeaders(),
           });
