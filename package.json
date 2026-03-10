@@ -1,7 +1,7 @@
 {
   "name": "teicloud-cli-teichi",
   "version": "1.0.0",
-  "description": "",
+  "description": "CLI tool for TeiCloud PaaS",
   "main": "index.js",
   "bin": {
     "teicloud": "./index.js"
@@ -13,8 +13,8 @@
     "type": "git",
     "url": "git+https://github.com/Tdat10052499/TeiCloud.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["cli", "paas", "deploy", "teicloud"],
+  "author": "Teichi",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
@@ -26,7 +26,9 @@
     "axios": "^1.13.6",
     "chalk": "^4.1.2",
     "commander": "^14.0.3",
+    "express": "^5.2.1",
     "form-data": "^4.0.5",
+    "open": "^11.0.0",
     "ora": "^5.4.1"
   }
 }
