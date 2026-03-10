@@ -1,0 +1,26 @@
+name: Deploy testdeploy6
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Auto-create Cloudflare Project (if not exists)
+        run: |
+          curl -s -X POST "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects" \
+               -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+               -H "Content-Type: application/json" \
+               -d '{"name":"testdeploy6","production_branch":"production"}'
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy . --project-name=testdeploy6

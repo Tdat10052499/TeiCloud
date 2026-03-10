@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Garden | AIoT Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <h1>🌿 Smart Garden <span>AIoT</span></h1>
+            <div class="status">
+                <span class="dot pulse"></span> Hệ thống đang hoạt động
+            </div>
+        </header>
+
+        <div class="cards-grid">
+            <div class="card">
+                <h3>🌡️ Nhiệt độ</h3>
+                <p id="temp" class="value">-- °C</p>
+            </div>
+            <div class="card">
+                <h3>💧 Độ ẩm đất</h3>
+                <p id="moisture" class="value">-- %</p>
+            </div>
+            <div class="card">
+                <h3>☀️ Ánh sáng</h3>
+                <p id="light" class="value">-- Lux</p>
+            </div>
+            <div class="card ai-card">
+                <h3>🤖 AI Agent</h3>
+                <p id="ai-status" class="value status-text">Đang phân tích...</p>
+            </div>
+        </div>
+
+        <button class="action-btn" onclick="triggerWatering()">💦 Kích hoạt tưới cây</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
